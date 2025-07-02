@@ -11,26 +11,6 @@ Dokumentasi lengkap proses setup High Availability di Proxmox dan Database HA me
 * **HA Container**: LXC (ct:100) dengan Docker dan project web
 * **HA Database**: MariaDB (Galera Cluster) di 3 node DB (db1, db2, db3)
 
----
-
-Login ke tiap node Proxmox (pve1, pve2, pve3):
-
-```bash
-pvesm add nfs ha-shared \
-  --server 192.168.0.129 \
-  --export /mnt/ha-shared \
-  --content rootdir \
-  --path /mnt/pve/ha-shared
-```
-
-Verifikasi:
-
-```bash
-pvesm status
-```
-
----
-
 ### 4. Buat Container (LXC) di NFS
 
 ```bash
