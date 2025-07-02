@@ -11,7 +11,7 @@ Dokumentasi lengkap proses setup High Availability di Proxmox dan Database HA me
 * **HA Container**: LXC (ct:100) dengan Docker dan project web
 * **HA Database**: MariaDB (Galera Cluster) di 3 node DB (db1, db2, db3)
 
-### 4. Buat Container (LXC) di NFS
+### 1. Buat Container (LXC) di NFS
 
 ```bash
 pct create 100 local:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst \
@@ -36,7 +36,7 @@ Pastikan Docker container pakai opsi `restart: always` di `docker-compose.yml` a
 
 ---
 
-### 5. Tambahkan Container ke HA Manager
+### 2. Tambahkan Container ke HA Manager
 
 ```bash
 ha-manager add ct:100 --state started
@@ -50,7 +50,7 @@ ha-manager status
 
 ---
 
-### 6. Setup Galera Cluster (MariaDB HA)
+### 2. Setup Galera Cluster (MariaDB HA)
 
 #### Di semua node DB (db1, db2, db3):
 
@@ -92,6 +92,7 @@ Cek:
 
 ```bash
 mysql -u root -e "SHOW STATUS LIKE 'wsrep_cluster_size';"
+mysql -u root -p -e "SHOW STATUS LIKE 'wsrep_cluster_status';"
 ```
 
 #### Join db2 dan db3:
@@ -105,7 +106,7 @@ systemctl start mysql
 
 ---
 
-### 7. Tes HA & Cluster
+### 3. Tes HA & Cluster
 
 * Coba matikan satu Proxmox node, lihat apakah container pindah otomatis.
 * Coba matikan satu DB node, lihat cluster size menyusut lalu kembali.
