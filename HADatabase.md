@@ -13,37 +13,6 @@ Dokumentasi lengkap proses setup High Availability di Proxmox dan Database HA me
 
 ---
 
-## 🔧 Step-by-Step Setup
-
-### 1. Install Proxmox di 3 Node
-
-* Install Proxmox VE seperti biasa di 3 VM / bare metal.
-* Pastikan IP static:
-
-  * `pve1`: 192.168.0.152
-  * `pve2`: 192.168.0.153
-  * `pve3`: 192.168.0.154
-
----
-
-### 2. Setup NFS Shared Storage (di server 192.168.0.129)
-
-```bash
-apt install nfs-kernel-server -y
-mkdir -p /mnt/ha-shared
-chmod 777 /mnt/ha-shared
-
-# /etc/exports
-/mnt/ha-shared 192.168.0.0/24(rw,sync,no_subtree_check,no_root_squash)
-
-exportfs -a
-systemctl restart nfs-kernel-server
-```
-
----
-
-### 3. Tambahkan Storage ke Proxmox
-
 Login ke tiap node Proxmox (pve1, pve2, pve3):
 
 ```bash
